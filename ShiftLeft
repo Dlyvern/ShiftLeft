@@ -1,0 +1,79 @@
+#include<iostream>
+
+void EnterSize(int* size)
+{
+	std::cout << "Enter size of array" << '\n';
+	std::cin >> *size;
+}
+
+void FillArray(int* array, int size)
+{
+	for (int i = 0; i < size; ++i)
+		std::cin >> array[i];
+}
+
+void ShowArray(int* array, int size)
+{
+	for (int i = 0; i < size; ++i)
+		std::cout << array[i];
+}
+
+void ShiftLeft(int *arr, int size, int from, int to, int shift) {
+    
+    from--;
+    to--; 
+
+    int rangeSize = to - from + 1;
+
+    int numShifts = shift % rangeSize;
+
+    int* temp = new int[rangeSize];
+
+    for (int i = from; i <= to; i++) 
+        temp[i - from] = arr[i];
+    
+
+    for (int i = 0; i < rangeSize; i++) {
+        int newIndex = (i + rangeSize - numShifts) % rangeSize;
+        arr[from + i] = temp[newIndex];
+    }
+
+    delete[]temp;
+}
+
+void EnterShiftInfo(int* from, int *to, int *shift)
+{
+	std::cout << "Enter 'from' position" << '\n';
+	std::cin >> *from;
+
+	std::cout << "Enter 'to' position" << '\n';
+	std::cin >> *to;
+
+	std::cout << "Enter shift" << '\n';
+	std::cin >> *shift;
+}
+
+int main()
+{
+	int size;
+
+	EnterSize(&size);
+
+	int* array = new int[size];
+
+	FillArray(array, size);
+
+	ShowArray(array, size);
+
+	std::cout << "\n\n";
+
+	int from, to, shift;
+
+	EnterShiftInfo(&from, &to, &shift);
+
+	ShiftLeft(array, size, from, to ,shift);
+
+	ShowArray(array, size);
+
+	return{};
+}
